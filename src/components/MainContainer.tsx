@@ -8,7 +8,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   mainContainer: {
     display: "flex",
     marginTop: "50px",
-    minHeight: "500px",
+    minHeight: "200px",
     maxWidth: "900px",
     alignItems: "center",
     justifyContent: "center",
