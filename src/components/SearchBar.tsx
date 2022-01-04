@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { TextField } from "@mui/material";
 import { AppContext } from "../App";
+import useDebounce from "../hooks/useDebounce";
 import { SEARCH_MOVIES } from "../reducers/actionTypes";
 import {
   FETCH_MOVIES_SUCCESS,
@@ -19,8 +20,10 @@ const styles: { [key: string]: React.CSSProperties } = {
 const SearchBar: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const { search } = state;
+  const debouncedSearchTerm = useDebounce(state.search, 500);
 
   useEffect(() => {
+    console.log("search term changed");
     const apiKey = process.env.REACT_APP_OMDB_API_KEY;
     let apiURL = `http://www.omdbapi.com/?apikey=${apiKey}=${search.trim()}`;
     dispatch({ type: FETCH_MOVIES_REQUEST });
@@ -38,7 +41,7 @@ const SearchBar: React.FC = () => {
           type: FETCH_MOVIES_FAILURE,
         });
       });
-  }, [state.search]);
+  }, [debouncedSearchTerm]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: SEARCH_MOVIES, payload: e.target.value });
