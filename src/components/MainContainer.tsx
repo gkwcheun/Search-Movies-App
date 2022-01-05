@@ -22,12 +22,11 @@ const styles: { [key: string]: React.CSSProperties } = {
 
 const MainContainer: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
-
   return (
     <div style={styles.mainContainer}>
       {state.loading ? (
         <CircularProgress style={styles.loadingSpinner} />
-      ) : state.movieList !== undefined && !state.error ? (
+      ) : state.movieList !== undefined && !state.error && state.search ? (
         <MovieList movieList={state.movieList} />
       ) : (
         <NoResults search={state.search} error={state.error} />

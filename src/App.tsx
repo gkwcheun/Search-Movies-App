@@ -19,7 +19,7 @@ export const styles: { [key: string]: React.CSSProperties } = {
 };
 
 export const initialState: MovieState = {
-  loading: true,
+  loading: false,
   movieList: [],
   search: "",
   error: "",

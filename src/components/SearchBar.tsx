@@ -20,27 +20,28 @@ const styles: { [key: string]: React.CSSProperties } = {
 const SearchBar: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const { search } = state;
-  const debouncedSearchTerm = useDebounce(state.search, 500);
+  const debouncedSearchTerm = useDebounce(search, 500);
 
   useEffect(() => {
-    console.log("search term changed");
     const apiKey = process.env.REACT_APP_OMDB_API_KEY;
     let apiURL = `http://www.omdbapi.com/?apikey=${apiKey}=${search.trim()}`;
-    dispatch({ type: FETCH_MOVIES_REQUEST });
-    axios
-      .get(apiURL)
-      .then((response) => {
-        dispatch({
-          type: FETCH_MOVIES_SUCCESS,
-          payload: response.data["Search"],
+    if (debouncedSearchTerm.length > 0) {
+      dispatch({ type: FETCH_MOVIES_REQUEST });
+      axios
+        .get(apiURL)
+        .then((response) => {
+          dispatch({
+            type: FETCH_MOVIES_SUCCESS,
+            payload: response.data["Search"],
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          dispatch({
+            type: FETCH_MOVIES_FAILURE,
+          });
         });
-      })
-      .catch((error) => {
-        console.log(error);
-        dispatch({
-          type: FETCH_MOVIES_FAILURE,
-        });
-      });
+    }
   }, [debouncedSearchTerm]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +55,7 @@ const SearchBar: React.FC = () => {
       label="Search for a movie!"
       variant="standard"
       placeholder="movie"
-      value={state.search}
+      value={search}
       onChange={handleChange}
       data-testid="search-bar"
       inputProps={{ "data-testid": "content-input" }}
