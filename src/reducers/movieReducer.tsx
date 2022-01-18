@@ -1,10 +1,13 @@
-import { Movie } from "../interfaces/interfaces";
+import { Movie, MovieInfo } from "../interfaces/interfaces";
 import { MovieActions } from "./actions";
 import {
   FETCH_MOVIES_FAILURE,
   FETCH_MOVIES_REQUEST,
   FETCH_MOVIES_SUCCESS,
+  FETCH_MOVIE_INFO_SUCCESS,
+  FETCH_MOVIE_INFO_FAILURE,
   SEARCH_MOVIES,
+  TOGGLE_MOVIE_INFO_MODAL,
 } from "./actionTypes";
 
 export interface MovieState {
@@ -12,6 +15,8 @@ export interface MovieState {
   movieList: Movie[];
   error: string;
   search: string;
+  showModal: boolean;
+  movieInfo?: MovieInfo;
 }
 
 export const movieReducer = (state: MovieState, action: MovieActions) => {
@@ -42,6 +47,22 @@ export const movieReducer = (state: MovieState, action: MovieActions) => {
         search: action.payload,
         loading: false,
         error: "",
+      };
+    case FETCH_MOVIE_INFO_SUCCESS:
+      return {
+        ...state,
+        movieInfo: action.payload,
+        showModal: true,
+      };
+    case FETCH_MOVIE_INFO_FAILURE:
+      return {
+        ...state,
+        showModal: false,
+      };
+    case TOGGLE_MOVIE_INFO_MODAL:
+      return {
+        ...state,
+        showModal: !state.showModal,
       };
     default:
       return state;
