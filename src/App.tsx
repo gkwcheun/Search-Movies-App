@@ -3,6 +3,7 @@ import { movieReducer, MovieState } from "./reducers/movieReducer";
 import { MovieActions } from "./reducers/actions";
 import SearchBar from "./components/SearchBar";
 import MainContainer from "./components/MainContainer";
+import MovieInfoModal from "./components/MovieInfoModal";
 
 export const styles: { [key: string]: React.CSSProperties } = {
   appContainer: {
@@ -19,10 +20,11 @@ export const styles: { [key: string]: React.CSSProperties } = {
 };
 
 export const initialState: MovieState = {
-  loading: true,
+  loading: false,
   movieList: [],
   search: "",
   error: "",
+  showModal: false,
 };
 
 export interface AppContextInterface {
@@ -43,6 +45,7 @@ function App() {
         <h1 style={styles.appHeader}>OMDB Movie Finder</h1>
         <SearchBar />
         <MainContainer />
+        <MovieInfoModal />
       </div>
     </AppContext.Provider>
   );

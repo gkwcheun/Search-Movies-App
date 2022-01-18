@@ -3,8 +3,11 @@ import {
   FETCH_MOVIES_SUCCESS,
   FETCH_MOVIES_FAILURE,
   SEARCH_MOVIES,
+  FETCH_MOVIE_INFO_SUCCESS,
+  FETCH_MOVIE_INFO_FAILURE,
+  TOGGLE_MOVIE_INFO_MODAL,
 } from "./actionTypes";
-import { Movie } from "../interfaces/interfaces";
+import { Movie, MovieInfo } from "../interfaces/interfaces";
 
 interface FETCH_MOVIES_REQUEST_ACTION {
   type: typeof FETCH_MOVIES_REQUEST;
@@ -24,8 +27,24 @@ interface SEARCH_MOVIES_ACTION {
   payload: string;
 }
 
+interface FETCH_MOVIE_INFO_SUCCESS {
+  type: typeof FETCH_MOVIE_INFO_SUCCESS;
+  payload: MovieInfo;
+}
+
+interface FETCH_MOVIE_INFO_FAILURE {
+  type: typeof FETCH_MOVIE_INFO_FAILURE;
+}
+
+interface TOGGLE_MOVIE_INFO_MODAL {
+  type: typeof TOGGLE_MOVIE_INFO_MODAL;
+}
+
 export type MovieActions =
   | FETCH_MOVIES_REQUEST_ACTION
   | FETCH_MOVIES_SUCCESS_ACTION
   | FETCH_MOVIES_FAILURE_ACTION
-  | SEARCH_MOVIES_ACTION;
+  | SEARCH_MOVIES_ACTION
+  | FETCH_MOVIE_INFO_SUCCESS
+  | FETCH_MOVIE_INFO_FAILURE
+  | TOGGLE_MOVIE_INFO_MODAL;
