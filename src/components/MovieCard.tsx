@@ -46,10 +46,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const moviePoster =
     movie.Poster !== "N/A" ? movie.Poster : placeholder_poster;
 
-  const handleClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {};
-
   const toggleModal = () => {
     const apiKey = process.env.REACT_APP_OMDB_API_KEY;
     let apiURL = `http://www.omdbapi.com/?apikey=${apiKey}&i=${movie.imdbID}&plot=full`;
@@ -85,8 +81,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         <p style={styles.movieTitle}>{movie.Title}</p>
         <p style={styles.movieYear}>{movie.Year}</p>
       </div>
-      <Button style={styles.typeBtn} variant="outlined" onClick={handleClick}>
-        ADD TO WATCHLIST
+      <Button style={styles.typeBtn} variant="outlined" onClick={toggleModal}>
+        View Details
       </Button>
     </div>
   );
